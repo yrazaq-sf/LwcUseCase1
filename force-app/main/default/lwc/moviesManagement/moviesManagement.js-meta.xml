@@ -4,4 +4,7 @@
     <description>Movies Management</description>
     <isExposed>true</isExposed>
     <masterLabel>Movies Management</masterLabel>
+    <targets>
+        <target>lightning__Tab</target>
+    </targets>
 </LightningComponentBundle>
