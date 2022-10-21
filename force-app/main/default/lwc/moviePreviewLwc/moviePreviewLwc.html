@@ -1,0 +1,44 @@
+<!--
+ - Created by yrazaq on 2/10/2022.
+ -->
+
+<!-- Movie Preview Lwc -->
+<template>
+    <!-- When movie is not selected -->
+    <template if:false={movie}>
+        <div class="slds-align_absolute-center slds-template__container">
+            <div aria-hidden="true" class="slds-illustration slds-illustration_large">
+                <img alt="" class="slds-illustration__svg slds-medium" src="/img/chatter/Desert.svg"/>
+                <div class="slds-text-longform">
+                    <h3 class="slds-text-heading_medium">No movie selected</h3>
+                    <p class="slds-text-body_regular">Open a movie from the list to get started.</p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <!-- When movie is selected -->
+    <template if:true={movie}>
+        <div class="slds-template__container slds-p-around_large">
+            <div aria-hidden="true" class="slds-illustration slds-illustration_large">
+                <template if:false={movie.ImageUrl__c}>
+                    <img alt="" class="movieImage" src={defaultMovieImage} />
+                </template>
+                <template if:true={movie.ImageUrl__c}>
+                    <img alt="" class="movieImage" src={movie.ImageUrl__c} />
+                </template>
+            </div>
+            <div class="slds-text-longform">
+                <div class="slds-text-heading_large">{movie.Name}</div>
+                <p class="slds-text-body_regular"><b>Name: </b> {movie.Name}</p>
+                <p class="slds-text-body_regular"><b>Category: </b> {movie.Category__c}</p>
+                <p class="slds-text-body_regular"><b>Description: </b> {movie.Description__c}</p>
+                <p class="slds-text-body_regular"><b>Female Actors Percentage: </b> {movie.FemaleActorsPercentage__c}%
+                </p>
+                <p class="slds-text-body_regular"><b>Male Actors Percentage: </b> {movie.MaleActorsPercentage__c}%</p>
+                <p class="slds-text-body_regular"><b>Release Date: </b> {movie.ReleaseDate__c}</p>
+                <p class="slds-text-body_regular"><b>Is Released: </b> {movie.IsReleased__c}</p>
+            </div>
+        </div>
+    </template>
+
+</template>

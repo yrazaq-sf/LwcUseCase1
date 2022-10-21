@@ -38,3 +38,8 @@ $RECYCLE.BIN/
 
 # Local environment variables
 .env
+# classes metadata
+force-app/main/default/classes/*.xml
+
+.idea
+IlluminatedCloud

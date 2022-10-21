@@ -4,5 +4,70 @@
 
 <!-- Movies Management -->
 <template>
+    <!-- Modal Start -->
+    <c-new-movie-modal is-open-modal={isOpenModal} onclosemodal={closeModal}></c-new-movie-modal>
+    <!-- Modal end -->
+    <!-- main container start -->
+    <div class="slds-grid slds-grid_vertical-stretch slds-theme_default slds-template__container">
+        <!-- Left side start-->
+        <div class="slds-col slds-size_4-of-12 slds-split-view slds-card slds-card_boundary slds-grid slds-grid_vertical ">
+            <!-- Header start -->
+            <div class="slds-split-view__header slds-shrink-none">
+                <!-- Icon + Movie + Button -->
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <lightning-icon icon-name="custom:custom100" size="medium"
+                                                title="Movies"></lightning-icon>
 
+                            </div>
+                            <div class="slds-media__body">
+                                <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                        <span>Movie</span>
+                                        <template if:true={selectedMovie}>
+                                                <span class="slds-page-header__title slds-truncate">{selectedMovie.Name}</span>
+                                        </template>
+                                        <template if:false={selectedMovie}>
+                                                <span class="slds-page-header__title slds-truncate"
+                                                      title="No movie selected">No movie selected</span>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                            <div class="slds-page-header__control">
+                                <button aria-live="assertive"
+                                        aria-pressed="false"
+                                        onclick={handleNewMovieClick}
+                                        class="slds-button slds-button_neutral slds-button_stateful slds-not-selected">
+                                            <span class="slds-text-not-selected">
+                                                New
+                                            </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- category filter -->
+                <c-filter-movie-lwc all-movies={allMovies} categories={categories}
+                                    onmovieidsfiltered={handleMovieIdsFiltered} onresetmoviesfilter={resetMoviesFilter}></c-filter-movie-lwc>
+
+            </div>
+            <div>
+                <div class="slds-split-view__list-header slds-p-left_none slds-align_absolute-center">
+                    Movies
+                </div>
+                <c-movies-results-lwc onmovieidseleceted={handleMovieIdSelected} movies={movies}></c-movies-results-lwc>
+            </div>
+        </div>
+        <div class="slds-col slds-size_8-of-12">
+            <c-movie-preview-lwc movie={selectedMovie}></c-movie-preview-lwc>
+        </div>
+    </div>
+    <!-- main container end -->
 </template>

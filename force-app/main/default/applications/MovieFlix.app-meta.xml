@@ -13,6 +13,10 @@
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>MovieFlix</label>
     <navType>Standard</navType>
+    <tabs>Movie__c</tabs>
+    <tabs>Actor__c</tabs>
+    <tabs>MovieActor__c</tabs>
+    <tabs>MovieFlix</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>MovieFlix_UtilityBar</utilityBar>
 </CustomApplication>

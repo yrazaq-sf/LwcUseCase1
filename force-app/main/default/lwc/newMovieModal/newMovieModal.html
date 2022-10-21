@@ -1,0 +1,71 @@
+<!--
+ - Created by yrazaq on 2/10/2022.
+ -->
+
+<!-- New Movie Modal -->
+<template>
+    <template if:true={isOpenModal}>
+        <section aria-labelledby="modal-heading-01" aria-modal="true" class="slds-modal slds-fade-in-open" role="dialog"
+                 tabindex="-1">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h1 class="slds-modal__title slds-hyphenate" id="modal-heading-01">New Movie</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium slds-grid slds-wrap" id="modal-content-id-1">
+                    <!-- First column -->
+                    <div class="slds-section slds-is-open slds-size_1-of-2 slds-p-left_small slds-p-right_small">
+                        <div class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small"
+                                  title="Section Title">Movie information</span>
+                        </div>
+                        <div aria-hidden="false" class="slds-section__content">
+                            <lightning-record-edit-form data-form-id="movieForm" object-api-name={movieObject}>
+                                <lightning-input-field field-name={movieName} required="true" value={movieNameVal} onchange={handleMovieFieldChange}></lightning-input-field>
+                                <lightning-input-field field-name={movieCategory} onchange={handleMovieFieldChange}></lightning-input-field>
+                                <lightning-input-field field-name={movieRealeaseDate} onchange={handleMovieFieldChange}></lightning-input-field>
+                                <lightning-input-field field-name={movieDescription} onchange={handleMovieFieldChange}></lightning-input-field>
+                                <lightning-input-field field-name={movieImageUrl} onchange={handleMovieFieldChange}></lightning-input-field>
+                                <lightning-input-field field-name={movieIsReleased} onchange={handleMovieFieldChange}></lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                    <!-- Second column -->
+                    <div class="slds-section slds-is-open slds-size_1-of-2 slds-p-left_small slds-p-right_small">
+                        <div class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small"
+                                  title="Section Title">Actors</span>
+                        </div>
+                        <div aria-hidden="false" class="slds-section__content">
+                            <lightning-record-edit-form object-api-name={movieActorsObject}>
+                                <template for:each={actors} for:item="actor">
+                                    <div class="slds-grid slds-grid_align-spread" key={actor.index}>
+                                        <lightning-input-field class="slds-col slds-size_3-of-4"
+                                                               data-actor-index={actor.index}
+                                                               field-name={actorField} onchange={handleActorChange}></lightning-input-field>
+                                        <template if:true={actor.isLastIndex}>
+                                            <lightning-button class="slds-m-left_x-small slds-m-top_large slds-col" label="+" onclick={addActorIndex}
+                                                              title="Add Actor"></lightning-button>
+                                        </template>
+                                        <template if:false={actor.isLastIndex}>
+                                            <lightning-button class="slds-m-left_x-small slds-m-top_large slds-col" data-actor-index={actor.index}
+                                                              label="-"
+                                                              onclick={removeActorIndex}
+                                                              title="Remove Actor"></lightning-button>
+                                        </template>
+                                    </div>
+                                </template>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button aria-label="Cancel and close" class="slds-button slds-button_neutral" onclick={closeModal}>
+                        Cancel
+                    </button>
+                    <button class="slds-button slds-button_brand" onclick={handleSaveButton}>Save</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

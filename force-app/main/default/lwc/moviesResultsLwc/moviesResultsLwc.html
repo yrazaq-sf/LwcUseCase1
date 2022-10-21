@@ -1,0 +1,11 @@
+<template>
+    <template if:true={movies}>
+        <template for:each={movies} for:item="movie">
+            <div class="slds-split-view__list-item slds-split-view__list-item-action slds-p-left_xx-large"
+                 key={movie.Id} data-movie-id={movie.Id} onclick={handleMovieClick}>
+                <template if:true={movie.IsReleased__c} onclick={handleMovieClick}>{movie.Name}</template>
+                <template if:false= {movie.IsReleased__c} onclick={handleMovieClick}><strike onclick={handleMovieClick}>{movie.Name}</strike></template>
+            </div>
+        </template>
+    </template>
+</template>

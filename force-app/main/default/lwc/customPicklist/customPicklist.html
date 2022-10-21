@@ -1,0 +1,53 @@
+<template>
+    <div class="slds-form-element">
+        <template if:true={isrequired}>
+            <abbr title="required" class="slds-required">*</abbr>
+        </template>
+        <label class="slds-form-element__label" id="combobox-label-id-26">Category</label>
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container slds-m-bottom_x-small">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" data-id='picklist-selector'
+                     onclick={handlePicklistClick}>
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                        <button aria-activedescendant={selectedOption.label}
+                                aria-controls="listbox-id-4"
+                                aria-expanded="true"
+                                aria-haspopup="listbox"
+                                aria-labelledby="combobox-label-id-26 combobox-id-4-selected-value"
+                                class="slds-input_faux slds-combobox__input slds-combobox__input-value"
+                                data-id="picklist-button" type="button">
+                            <span class="slds-truncate">{selectedOption.label}</span>
+                        </button>
+                        <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+<svg aria-hidden="true" class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default">
+<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+</svg>
+</span>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" id="listbox-id-4"
+                         role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            <template for:each={options} for:item="option">
+                                <li class="slds-listbox__item" key={option.label} role="presentation" onclick={handleOptionClicked} data-option-label={option.label}>
+                                    <div aria-checked="true"
+                                         class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-is-selected"
+                                         role="option" data-option-label={option.label}>
+                                            <span class="slds-media__figure slds-listbox__option-icon" data-option-label={option.label}>
+                                                <template if:true={option.isSelected} data-option-label={option.label}>
+                                                    <lightning-icon data-option-label={option.label} size="x-small" icon-name="utility:check" title="Check"></lightning-icon>
+                                                </template>
+                                            </span>
+                                        <span class="slds-media__body" data-option-label={option.label}>
+                                                    <span class="slds-truncate"
+                                                          title={option.label} data-option-label={option.label}>{option.label}</span>
+                                                </span>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
