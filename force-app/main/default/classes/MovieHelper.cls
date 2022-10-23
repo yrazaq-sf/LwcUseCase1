@@ -76,6 +76,11 @@ public with sharing class MovieHelper {
         TriggerHandler.clearBypass('MovieTriggerHandler');
     }
 
+    /*******************************************************************************************************
+    * @author: Yassine RAZAQ (yrazaq@salesforce.com)
+    * @description: Updates the numberOfMovies field of the related Actors.
+    * @param movies: A map of targeted movies.
+    */
     public static void updateRelatedActorsNumberOfMovies(Map<Id, Movie__c> movies){
         Map<Id, Actor__c> relatedActorsMap = getRelatedActors(movies);
         ActorHelper.updateNbrOfMovies(relatedActorsMap);
