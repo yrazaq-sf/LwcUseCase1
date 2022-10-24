@@ -10,7 +10,7 @@ import Category__c from '@salesforce/schema/Movie__c.Category__c';
 
 
 export default class MoviesManagement extends LightningElement {
-    logo = NETFLIX_BLACK_LOGO
+    moviesIconName = 'custom:custom100';
     _selectedMovieId = undefined;
     selectedMovie = undefined;
     @api isOpenModal = false

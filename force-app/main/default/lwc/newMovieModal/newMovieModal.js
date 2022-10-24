@@ -14,6 +14,8 @@ import MOVIEACTOR_OBJECT from '@salesforce/schema/MovieActor__c'
 import MOVIEACTOR_ACTOR_FIELD from '@salesforce/schema/MovieActor__c.Actor__c'
 import insertMovies from '@salesforce/apex/moviesController.insertMovies';
 import insertMovieActors from '@salesforce/apex/moviesController.insertMovieActors';
+import {ShowToastEvent} from "lightning/platformShowToastEvent";
+import { reduceErrors } from 'c/utils';
 
 
 export default class NewMovieModal extends LightningElement {
@@ -35,6 +37,8 @@ export default class NewMovieModal extends LightningElement {
         Description__c : null,
         IsReleased__c : null
     }
+    // required movie fields
+    requiredFields = ['Name', 'Category__c', 'ReleaseDate__c'];
     // MovieActor object and fields
     movieActorsObject = MOVIEACTOR_OBJECT
     actorField = MOVIEACTOR_ACTOR_FIELD
@@ -46,6 +50,9 @@ export default class NewMovieModal extends LightningElement {
         {index: 2, isLastIndex:false, value: undefined},
         {index: 3, isLastIndex:true, value: undefined}
         ]
+    // variable to check if form is ready to be saved
+    isReadyToInsert=false;
+
     // adding a new actor loopkup by adding an actorIndex{id, isLastIndex}
     addActorIndex(){
         let _actors = []
@@ -58,13 +65,14 @@ export default class NewMovieModal extends LightningElement {
             })
         })
         // addind a new actor index with isLastIndex set to TRUE
-        let _newActor = {index: this.actors[this.actors.length-1].id + 1,
+        let _newActor = {index: this.actors[this.actors.length-1].index + 1,
                         isLastIndex: true,
                         value: undefined
         }
         _actors.push(_newActor)
         // updating the original array
         this.actors = _actors
+        this.actors.forEach(_actor=>{console.log(_actor.index)})
     }
     removeActorIndex(event){
         let _currentActorIndexId = event.target.dataset.actorIndex
@@ -101,47 +109,109 @@ export default class NewMovieModal extends LightningElement {
     }
     // saving movie and movieActors records
     handleSaveButton(){
-        // inserting movie record with apex controller
-        insertMovies({movies: [this.movieRecord]})
-            .then(result => {
-                let insertedMovie = result[0];
-                console.log("Movie inserted : "+insertedMovie.Id);
-                let _movieId = insertedMovie.Id
-                _insertMovieActors(_movieId, this.actors)
-            })
-            .catch(error => {
-                console.error(error)
-            });
-
-        // inserting movie actors records
-        function _insertMovieActors(_movieId, _actors) {
-            // preparing movieActors data
-            let movieActors = []
-            _actors.forEach(actor =>{
-                if (actor.value != null){
-                    movieActors.push({
-                        Movie__c: _movieId,
-                        Actor__c: actor.value
-                    })
-                }
-            })
-
-            // inserting movie actors with apex controller
-            if (movieActors.length){
-                insertMovieActors({movieActors: movieActors})
-                    .then(result => {
-                        console.log(movieActors.length + " movie actors inserted")
-                        console.log(result);
+        // checking required fields
+        this.__checkRequiredFields();
+        // checking Actor duplicates
+        this.__checkActorDuplicates();
+        // checking if form is ready to be inserted
+        if (this.isReadyToInsert) {
+            // inserting movie record with apex controller
+            insertMovies({movies: [this.movieRecord]})
+                .then(result => {
+                    let insertedMovie = result[0];
+                    console.log("Movie inserted : " + insertedMovie.Id);
+                    let _movieId = insertedMovie.Id
+                    this._insertMovieActors(_movieId, this.actors)
                 })
-                    .catch(error => {
-                        console.error(error)
-                    });
-            }
-
+                .catch(error => {
+                    const errorMsg = reduceErrors(error)
+                    console.error(errorMsg)
+                    this.__showErrorToast(errorMsg)
+                });
         }
+
+    }
+
+    _insertMovieActors(_movieId, _actors) {
+        // preparing movieActors data
+        let movieActors = []
+        _actors.forEach(actor =>{
+            if (actor.value){
+                movieActors.push({
+                    Movie__c: _movieId,
+                    Actor__c: actor.value
+                })
+            }
+        })
+
+        // inserting movie actors with apex controller
+        if (movieActors.length){
+            insertMovieActors({movieActors: movieActors})
+                .then(result => {
+                    this.closeModal()
+                    console.log(movieActors.length + " movie actors inserted")
+                    console.log(result);
+                    this.__showSuccessToast('The movie with '+movieActors.length+' actors was added successfully!')
+                })
+                .catch(error => {
+                    const errorMsg = reduceErrors(error)
+                    console.error(errorMsg)
+                    this.__showErrorToast(errorMsg)
+                });
+        }
+
     }
     // function to pop down the modal
     closeModal() {
         this.dispatchEvent(new Event('closemodal'));
+    }
+    // function to check if all mandatory fields are satisfied
+    __checkRequiredFields() {
+        let _emptyRequiredFields = []
+        for (const [key, value] of Object.entries(this.movieRecord)) {
+            console.log(key.toString());
+            if (this.requiredFields.includes(key.toString()) && !value){
+                _emptyRequiredFields.push(key.toString())
+            }
+        }
+        if (_emptyRequiredFields.length>0){
+            this.isReadyToInsert=false
+            let __errorMsg = '\'The following fields can\'t be empty:\n'+_emptyRequiredFields.toString()
+            this.__showErrorToast(__errorMsg)
+        }else {
+            this.isReadyToInsert = true
+        }
+    }
+    // function to check if there is any actor duplicates
+    __checkActorDuplicates() {
+        // getting actor values
+        const __actorValues = this.actors.map(function (actor) {return actor.value})
+        // checking if any actor value is duplicated
+        const isDuplicate = __actorValues.some(function (actor, idx) {
+            return __actorValues.indexOf(actor) !== idx
+        });
+        if (isDuplicate){
+            this.isReadyToInsert = false
+            this.__showErrorToast('Please remove duplicate actors')
+        }else {
+            this.isReadyToInsert= true
+        }
+
+    }
+    __showErrorToast(errorMsg) {
+        const evt = new ShowToastEvent({
+            title: 'We hit a snag.',
+            message: errorMsg,
+            variant: 'error',
+        });
+        this.dispatchEvent(evt);
+    }
+    __showSuccessToast(successMsg) {
+        const evt = new ShowToastEvent({
+            title: 'Success.',
+            message: successMsg,
+            variant: 'success',
+        });
+        this.dispatchEvent(evt);
     }
 }
