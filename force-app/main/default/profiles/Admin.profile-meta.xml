@@ -10,6 +10,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ActorHelper_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ActorTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -27,6 +31,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>MovieTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -478,6 +486,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ManageContentTypes</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageConvMiningReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

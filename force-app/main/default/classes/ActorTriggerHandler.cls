@@ -11,6 +11,12 @@ public with sharing class ActorTriggerHandler extends TriggerHandler {
         this.newActorsMap = (Map<Id, Actor__c>) Trigger.newMap;
         this.oldActorsMap = (Map<Id, Actor__c>) Trigger.oldMap;
     }
+    public override void afterInsert() {
+        ActorHelper.updateRelatedMoviesGenderPercentage(this.newActorsMap);
+    }
+    public override void afterUpdate() {
+        ActorHelper.updateRelatedMoviesGenderPercentage(this.newActorsMap);
+    }
     public override void beforeDelete() {
         /**
         * @Description: The related movies are retrieved in beforeDelete instead of afterDelete because

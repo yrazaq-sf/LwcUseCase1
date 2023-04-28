@@ -16,6 +16,6 @@ public with sharing class MovieScheduler implements Schedulable {
     // String job_cron = '20 30 8 10 2 ?';
     // String jobID = System.schedule('MovieScheduler', job_cron, job);
     public void execute(SchedulableContext ctx) {
-        Database.executeBatch(new MovieBatch());
+        Id batchId = Database.executeBatch(new MovieBatch());
     }
 }
