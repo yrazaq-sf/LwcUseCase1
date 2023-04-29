@@ -117,10 +117,6 @@
         <type>CustomApplication</type>
     </appMenuItems>
     <appMenuItems>
-        <name>DEVHUB_upfs0qmvfdws22hicaj6</name>
-        <type>ConnectedApp</type>
-    </appMenuItems>
-    <appMenuItems>
         <name>MovieFlix</name>
         <type>CustomApplication</type>
     </appMenuItems>

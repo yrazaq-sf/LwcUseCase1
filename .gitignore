@@ -43,3 +43,5 @@ force-app/main/default/classes/*.xml
 
 .idea
 IlluminatedCloud
+.husky/*
+.vscode
