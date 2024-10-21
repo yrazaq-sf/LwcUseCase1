@@ -153,12 +153,12 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>Film</label>
+    <label>Movie</label>
     <nameField>
         <label>Movie Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Filmat</pluralLabel>
+    <pluralLabel>Movies</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

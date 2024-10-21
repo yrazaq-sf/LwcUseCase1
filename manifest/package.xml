@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>*</members>
+		<members>ActorHelper</members>
+		<members>ActorHelper_Test</members>
+		<members>ActorTriggerHandler</members>
+		<members>ActorTriggerHandler_Test</members>
+		<members>MovieActorHelper</members>
+		<members>MovieActorHelper_Test</members>
+		<members>MovieActorTriggerHandler</members>
+		<members>MovieActorTriggerHandler_Test</members>
+		<members>MovieBatch</members>
+		<members>MovieBatch_Test</members>
+		<members>MovieHelper</members>
+		<members>MovieHelper_Test</members>
+		<members>MovieScheduler</members>
+		<members>MovieScheduler_Test</members>
+		<members>MovieTriggerHandler</members>
+		<members>MovieTriggerHandler_Test</members>
+		<members>TestFactory</members>
+		<members>TriggerHandler</members>
+		<members>TriggerHandler_Test</members>
+		<members>moviesController</members>
+		<members>moviesController_Test</members>
 		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ApexTrigger</name>
+	</types>
+	<types>
+		<members>NetflixNSymbollogoredtransparentRGB</members>
+		<name>ContentAsset</name>
+	</types>
+	<types>
+		<members>MovieFlix</members>
+		<name>CustomApplication</name>
 	</types>
 	<types>
 		<members>Actor__c</members>
@@ -18,8 +50,36 @@
 		<name>CustomTab</name>
 	</types>
 	<types>
-		<members>*</members>
+		<members>MovieFlix_UtilityBar</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>Actor__c-Actor Layout</members>
+		<members>MovieActor__c-MovieActor Layout</members>
+		<members>Movie__c-Movie Layout</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>filterMovieLwc</members>
+		<members>movieFlix</members>
+		<members>moviePreviewLwc</members>
+		<members>moviesManagement</members>
+		<members>moviesResultsLwc</members>
+		<members>newMovieModal</members>
+		<members>singleMovieCardLwc</members>
 		<name>LightningComponentBundle</name>
 	</types>
-	<version>55.0</version>
+	<types>
+		<members>Admin</members>
+		<name>PermissionSet</name>
+	</types>
+	<types>
+		<members>Admin</members>
+		<name>Profile</name>
+	</types>
+	<types>
+		<members>NetflixBlackLogo</members>
+		<name>StaticResource</name>
+	</types>
+	<version>60.0</version>
 </Package>
